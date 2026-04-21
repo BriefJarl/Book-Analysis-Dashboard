@@ -12,7 +12,7 @@ st.title("Login Required")
 username = st.text_input("Username")
 password = st.text_input("Password", type="password")
 
-if username != "Bhumi" or password != "Bhumi96":
+if username != "Bhumi" or password != "1234":
     st.warning("Please login to access dashboard")
     st.stop()
 
