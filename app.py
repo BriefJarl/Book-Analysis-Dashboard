@@ -59,7 +59,7 @@ def load_data():
 df = load_data()
 
 # -----------------------------
-# Theme Toggle
+# Toggle
 # -----------------------------
 theme = st.sidebar.radio("Theme", ["Dark", "Light"])
 
@@ -76,7 +76,7 @@ if theme == "Light":
 # -----------------------------
 # Title
 # -----------------------------
-st.title("📊 Book Analysis Dashboard")
+st.title("Book Analysis Dashboard")
 
 # -----------------------------
 # Metrics
@@ -89,7 +89,7 @@ if not df.empty:
     col3.metric("Max Price", df["PRICE"].max())
 
 # -----------------------------
-# Sidebar Filters
+# Sidebar
 # -----------------------------
 st.sidebar.header("Filter Options")
 
@@ -102,7 +102,7 @@ price_range = st.sidebar.slider("Select Price", 0, 60, (0, 60))
 search = st.text_input("🔍 Search Book Title")
 
 # -----------------------------
-# Filtering (SAFE VERSION)
+# Filtering
 # -----------------------------
 if not df.empty:
     filtered_df = df[
@@ -140,7 +140,7 @@ if not filtered_df.empty:
 # -----------------------------
 # Charts
 # -----------------------------
-st.subheader("📊 Visual Insights")
+st.subheader("Visual Insights")
 
 if not filtered_df.empty:
 
@@ -157,7 +157,7 @@ if not filtered_df.empty:
 # -----------------------------
 # Top 10 Expensive Books
 # -----------------------------
-st.subheader("💰 Top 10 Most Expensive Books")
+st.subheader("Top 10 Most Expensive Books")
 
 if not df.empty:
     top_books = df.sort_values(by="PRICE", ascending=False).head(10)
