@@ -21,7 +21,7 @@ st.success("Login successful :)")
 # -----------------------------
 # Load Data FROM API
 # -----------------------------
-API_URL = "API_URL = "https://book-analysis-dashboard.onrender.com/books""
+API_URL = "https://book-analysis-dashboard.onrender.com/books"
 
 @st.cache_data
 def load_data():
