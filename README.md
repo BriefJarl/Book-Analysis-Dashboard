@@ -39,8 +39,8 @@ A full-stack data application that analyzes book data with an interactive dashbo
 
 ## 🌐 Live Demo
 
-- Frontend: ()
-- Backend API: ()
+- Frontend: (https://book-dashboard-analysis-96.streamlit.app)
+- Backend API: (https://book-analysis-dashboard.onrender.com/books)
 
 ---
 
