@@ -46,7 +46,7 @@ A full-stack data application that analyzes book data with an interactive dashbo
 
 ## 🔐 Demo Login
 
-Username: `admin`  
+Username: `Admin`  
 Password: `1234`  
 
 > Note: This is a demo login system to simulate access control.
