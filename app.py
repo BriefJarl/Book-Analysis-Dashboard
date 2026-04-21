@@ -31,15 +31,24 @@ def load_data():
         data = response.json()
         df = pd.DataFrame(data)
 
-        # FIX: Convert data types
-        rating_map = {"One":1, "Two":2, "Three":3, "Four":4, "Five":5}
+        rating_map = {
+            "One": 1,
+            "Two": 2,
+            "Three": 3,
+            "Four": 4,
+            "Five": 5
+        }
 
+        # Convert PRICE
         if "PRICE" in df.columns:
             df["PRICE"] = pd.to_numeric(df["PRICE"], errors="coerce")
 
+        # Convert RATING
         if "RATING" in df.columns:
-            if df["RATING"].dtype == "object":
-                df["RATING"] = df["RATING"].map(rating_map)
+            df["RATING"] = df["RATING"].map(rating_map)
+
+        # CRITICAL FIX: remove bad rows
+        df = df.dropna(subset=["PRICE", "RATING"])
 
         return df
 
@@ -67,7 +76,7 @@ if theme == "Light":
 # -----------------------------
 # Title
 # -----------------------------
-st.title(" Book Analysis Dashboard")
+st.title("📊 Book Analysis Dashboard")
 
 # -----------------------------
 # Metrics
@@ -84,8 +93,8 @@ if not df.empty:
 # -----------------------------
 st.sidebar.header("Filter Options")
 
-rating_range = st.sidebar.slider("Select Rating", 1, 5, (1,5))
-price_range = st.sidebar.slider("Select Price", 0, 60, (0,60))
+rating_range = st.sidebar.slider("Select Rating", 1, 5, (1, 5))
+price_range = st.sidebar.slider("Select Price", 0, 60, (0, 60))
 
 # -----------------------------
 # Search
@@ -93,16 +102,16 @@ price_range = st.sidebar.slider("Select Price", 0, 60, (0,60))
 search = st.text_input("🔍 Search Book Title")
 
 # -----------------------------
-# Filtering
+# Filtering (SAFE VERSION)
 # -----------------------------
 if not df.empty:
     filtered_df = df[
-        (df["RATING"] >= rating_range[0]) & (df["RATING"] <= rating_range[1]) &
-        (df["PRICE"] >= price_range[0]) & (df["PRICE"] <= price_range[1])
+        (df["RATING"].between(rating_range[0], rating_range[1])) &
+        (df["PRICE"].between(price_range[0], price_range[1]))
     ]
 
-    # Apply search
-    if search:
+    # Apply search safely
+    if search and "TITLE" in filtered_df.columns:
         filtered_df = filtered_df[
             filtered_df["TITLE"].str.contains(search, case=False, na=False)
         ]
@@ -131,7 +140,7 @@ if not filtered_df.empty:
 # -----------------------------
 # Charts
 # -----------------------------
-st.subheader("Visual Insights")
+st.subheader("📊 Visual Insights")
 
 if not filtered_df.empty:
 
@@ -148,7 +157,7 @@ if not filtered_df.empty:
 # -----------------------------
 # Top 10 Expensive Books
 # -----------------------------
-st.subheader("Top 10 Most Expensive Books")
+st.subheader("💰 Top 10 Most Expensive Books")
 
 if not df.empty:
     top_books = df.sort_values(by="PRICE", ascending=False).head(10)
